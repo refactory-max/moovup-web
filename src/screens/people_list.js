@@ -5,6 +5,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
+import { useNavigate } from "react-router-dom";
+
 // Network
 import { getPeople } from '../network/moovup_services';
 
@@ -15,10 +17,11 @@ export default function PeopleList() {
 
     const [people, setPeople] = React.useState([]);
 
+    const navigate = useNavigate();
+
     React.useEffect(() => {
         (async () => {
             const people = await getPeople();
-            console.log(people);
             setPeople(people);
         })();
     }, []);
@@ -46,16 +49,16 @@ export default function PeopleList() {
                             return (
                                 <ListItem disablePadding
                                     key={person._id}>
-                                    <ListItemButton
-                                        onClick={() => {
-                                            console.log(`XXX-ML clicked`)
-                                        }}>
-                                        <img
-                                            src={person.picture}
-                                            alt="Logo"
-                                            style={{ width: 40, height: 40, borderRadius: 40 / 2 }} />
-                                        <ListItemText primary={getDisplayName(person)} />
-                                    </ListItemButton>
+                                        <ListItemButton
+                                            onClick={() => {
+                                                navigate('/friend_details', { state: { person, test: 'wahaha' } })
+                                            }}>
+                                            <img
+                                                src={person.picture}
+                                                alt="Logo"
+                                                style={{ width: 40, height: 40, borderRadius: 40 / 2 }} />
+                                            <ListItemText primary={getDisplayName(person)} />
+                                        </ListItemButton>
                                 </ListItem>
                             )
                         })
